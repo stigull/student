@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load templatetools %}
+
+{% block title %}{% trans 'Um félagið' %}, {{ schoolyear }} | {{ block.super }} {% endblock %}
+
+
+{% block content %}
+<h1>{% trans 'Um félagið' %}, {{ schoolyear }}</h1>
+{% if info %}
+{% autoescape off %}
+{{ info.info_html }}
+{% endautoescape %}
+{% else %}
+<p class="info">{% trans 'Engar upplýsingar hafa verið skráðar um félagið' %}</p>
+{% endif %}
+
+<h2>{% trans 'Stjórn' %}</h2>
+{% if government %}
+{% with government as list_of_roles %}
+{% include 'snippets/list_of_roles.html' %}
+{% endwith %}
+{% else %}
+<p class="info">{% trans 'Engar upplýsingar hafa verið skráðar um stjórn félagsins' %}</p>
+{% endif %}
+<h2>{% trans 'Embætti' %}</h2>
+{% if non_government %}
+{% with non_government as list_of_roles %}
+{% include 'snippets/list_of_roles.html' %}
+{% endwith %}
+{% else %}
+<p class="info">{% trans 'Engar upplýsingar hafa verið skráðar um önnur embætti innan félagsins' %}</p>
+{% endif %}
+{% endblock %} 
+
+{% block alt_content %}
+<h1>{% trans 'Aðsetur' %}</h1>
+{% if info %}
+<div class="vcard">
+<div class="fn n">{{ info.name }}</div>
+<div class="adr">
+    <div class="sa-pc">
+        <span class="street-address">{{ info.address }}</span>,
+        <span class="postal-code">{{ info.postalcode }}</span> <span class="locality">{{ info.city }}</span>
+    </div>
+    <div class="country-name">Ísland</div>
+</div>
+<p><a href="mailto:{{ info.email }}" class="email">{{ info.email }}</a></p>
+<p class="hidden"><a class="url" href="http://{{ info.get_absolute_url }}">{{ info.name }}</a></p>
+</div>
+{% else %}
+<p class="info">{% trans 'Engar upplýsingar hafa verið skráðar um aðsetur félagsins' %}</p>
+{% endif %}
+
+<h2>{% trans 'Reikningsnúmer' %}</h2>
+<dl>
+<dt>{% trans 'Kennitala' %}</dt>
+<dd>{% if info.kennitala %}{{ info.get_kennitala }}{% else %}{% trans 'Félagið hefur enga skráða kennitölu' %}{% endif %}</dd>
+{% for account in info.accounts.all %}
+<dt>{{ account.name }}</dt>
+<dd>{{ account.number }}</dd>
+{% endfor %}
+</dl>
+<h2>{% trans 'Lög félagsins' %}</h2>
+{% if schoolyear.has_laws %}
+<p>
+    <a href="{% url laws_show_schoolyear schoolyear.starts.year, schoolyear.ends.year %}">{% trans 'Lög félagsins' %}</a>
+</p>
+{% else %}
+<p class="info">{% trans 'Engin lög eru skráð fyrir þetta skólaár' %}</p>
+{% endif %}
+{% endblock %}
+
+{% block alt_content_2 %}
+<h1>{% trans 'Upplýsingar um síðustu skólaár' %}</h1>
+{% get_list_of_objects student Schoolyear as list_of_schoolyears %}
+{% with list_of_schoolyears as list_of_objects %}
+{% include 'snippets/list_of_objects.html' %}
+{% endwith %}
+{% endblock %}

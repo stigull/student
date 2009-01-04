@@ -1,0 +1,17 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n %}
+
+{% block extrahead %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" /></script>
+{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+    {{ form.as_p }}
+    <input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
+    {{ previous_fields|safe }}
+    <input type="submit" value="{% trans 'Fara í næsta skref' %}">
+</form>
+{% endblock %}
+ 

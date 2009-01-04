@@ -1,0 +1,8 @@
+<dl>
+{% for userinrole in list_of_roles %}
+<dt>{{ userinrole.role }}</dt>
+{% with userinrole.user.get_profile as user %}
+<dd><a href="{{ user.get_absolute_url }}">{{ user.get_fullname }}</a></dd>
+{% endwith %}
+{% endfor %}
+</dl> 
