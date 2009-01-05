@@ -17,10 +17,13 @@
 {% endif %}
 
 <h2>{% trans 'Stjórn' %}</h2>
-{% if government %}
-{% with government as list_of_roles %}
-{% include 'snippets/list_of_roles.html' %}
-{% endwith %}
+{% if presidential_government or non_presidential_government %}
+    {% with presidential_government as list_of_roles %}
+    {% include 'snippets/list_of_roles.html' %}
+    {% endwith %}
+    {% with non_presidential_government as list_of_roles %}
+    {% include 'snippets/list_of_roles.html' %}
+    {% endwith %}
 {% else %}
 <p class="info">{% trans 'Engar upplýsingar hafa verið skráðar um stjórn félagsins' %}</p>
 {% endif %}
@@ -32,7 +35,7 @@
 {% else %}
 <p class="info">{% trans 'Engar upplýsingar hafa verið skráðar um önnur embætti innan félagsins' %}</p>
 {% endif %}
-{% endblock %} 
+{% endblock %}
 
 {% block alt_content %}
 <h1>{% trans 'Aðsetur' %}</h1>

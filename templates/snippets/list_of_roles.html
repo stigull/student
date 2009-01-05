@@ -1,8 +1,11 @@
+{% regroup list_of_roles by role as roles %}
 <dl>
-{% for userinrole in list_of_roles %}
-<dt>{{ userinrole.role }}</dt>
+{% for role in roles %}
+<dt>{{ role.grouper }}</dt>
+{% for userinrole in role.list %}
 {% with userinrole.user.get_profile as user %}
 <dd><a href="{{ user.get_absolute_url }}">{{ user.get_fullname }}</a></dd>
 {% endwith %}
 {% endfor %}
-</dl> 
+{% endfor %}
+</dl>
