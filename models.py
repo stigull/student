@@ -5,11 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User, Group
 from django.contrib.localflavor.is_.is_postalcodes import IS_POSTALCODES
 
-try:
-    from markdown2 import markdown
-except ImportError:
-    def markdown(string):
-        return string
+from markdown2 import markdown
 
 from stigull_profile.models import GOVERNMENT_GROUP
 
