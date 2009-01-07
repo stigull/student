@@ -2,9 +2,11 @@
 
 {% load i18n %}
 {% load templatetools %}
+{% load compressed %}
 
 {% block title %}{% trans 'Um félagið' %}, {{ schoolyear }} | {{ block.super }} {% endblock %}
 
+{% block css %}{% compressed_css 'info' %}{% endblock %}
 
 {% block content %}
 <h1>{% trans 'Um félagið' %}, {{ schoolyear }}</h1>
@@ -44,7 +46,7 @@
 <div class="fn n">{{ info.name }}</div>
 <div class="adr">
     <div class="sa-pc">
-        <span class="street-address">{{ info.address }}</span>,
+        <span class="street-address">{{ info.address }}</span>
         <span class="postal-code">{{ info.postalcode }}</span> <span class="locality">{{ info.city }}</span>
     </div>
     <div class="country-name">Ísland</div>
@@ -76,7 +78,7 @@
 {% endblock %}
 
 {% block alt_content_2 %}
-<h1>{% trans 'Upplýsingar um síðustu skólaár' %}</h1>
+<h1>{% trans 'Um síðustu skólaár' %}</h1>
 {% get_list_of_objects student Schoolyear as list_of_schoolyears %}
 {% with list_of_schoolyears as list_of_objects %}
 {% include 'snippets/list_of_objects.html' %}
